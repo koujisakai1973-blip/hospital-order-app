@@ -1,0 +1,62 @@
+<!doctype html><html lang='ja'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'><title>ライト動物病院 発注スキャン 試作 v2</title><script src='https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'></script><style>body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;margin:0;background:#f4f6f8;color:#111}header{background:white;padding:18px 16px;border-bottom:1px solid #ddd;position:sticky;top:0}h1{font-size:20px;margin:0}.wrap{max-width:760px;margin:auto;padding:16px}.card{background:white;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px #0001}button{font-size:18px;border:0;border-radius:12px;padding:15px 18px;background:#1677ff;color:white;width:100%;font-weight:700}.secondary{background:#e9eef5;color:#123}.danger{background:#fff0f0;color:#a00}.row{display:flex;gap:8px}.row>*{flex:1}input,select{box-sizing:border-box;width:100%;font-size:17px;padding:12px;border:1px solid #ccd3db;border-radius:10px;margin:5px 0 12px}label{font-size:13px;color:#555}.hint{font-size:13px;color:#666;line-height:1.5}.item{padding:11px 0;border-bottom:1px solid #eee}.item:last-child{border:0}.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;font-size:12px}.qty{font-weight:700}.hidden{display:none}#reader{width:100%;overflow:hidden;border-radius:12px;margin-top:12px}#scanStatus{font-size:13px;color:#555;margin-top:8px}.scan-actions{display:flex;gap:8px;margin-top:10px}.scan-actions button{font-size:15px;padding:10px}.stop{background:#555}@media print{header,.no-print{display:none}.card{box-shadow:none}.wrap{max-width:none}}</style></head><body><header><h1>発注スキャン｜試作品</h1></header><div class='wrap'>
+<div class='card no-print'><button id='scan'>📷 カメラでコードをスキャン</button><div id='reader' class='hidden'></div><div id='scanStatus'></div><div id='scanActions' class='scan-actions hidden'><button class='stop' id='stopScan'>スキャンを終了</button></div><p class='hint'>JAN/EAN、QR、GS1 DataMatrixなどを読み取ります。複数のコードがある場合は、商品識別に使えるコードを優先して登録します。初回のみカメラ使用の許可が必要です。</p><label>コード（GTIN/JANなど）</label><input id='code' inputmode='numeric' placeholder='例：4992945114217'><button class='secondary' id='lookup'>コードを登録／呼び出す</button></div>
+<div id='edit' class='card hidden no-print'><h2 style='font-size:18px;margin-top:0'>商品確認</h2><label>商品名</label><input id='name'><div class='row'><div><label>規格</label><input id='spec' placeholder='例 5mg 500錠'></div><div><label>数量</label><input id='qty' type='number' min='1' value='1'></div></div><label>発注先</label><select id='vendor'><option>富田薬品</option><option>徳島医療器</option><option>富士フィルムVETシステムズ</option><option>未設定</option></select><label>備考</label><input id='note'><button id='add'>発注リストへ追加</button></div>
+<div class='card'><div class='row'><h2 style='font-size:18px;margin:0'>本日の発注</h2><span id='count' style='text-align:right'>0品目</span></div><div id='list'><p class='hint'>まだ登録されていません。</p></div></div>
+<div class='card no-print'><button id='print'>発注先ごとに印刷</button><br><br><button class='danger' id='clear'>本日のリストを消去</button></div>
+<div class='card'><h2 style='font-size:18px'>試作マスター例</h2><p class='hint'>今回の写真から分かったコードを例として入れています。初回登録後はブラウザ内に保存され、同じコードなら次回は商品名・規格・発注先を呼び出します。複数コードを同じ商品に紐づける設計へ拡張可能です。</p></div>
+</div><script>
+const seed={
+'4987997010389':{name:'コンセーブ錠25',spec:'25mg 100錠',vendor:'未設定'},
+'4992945114231':{name:'ピモベハート錠2.5',spec:'2.5mg 50錠',vendor:'未設定'},
+'4992945114217':{name:'ピモベハート錠5',spec:'5mg 500錠',vendor:'未設定'},
+'14987035450815':{name:'レペタン坐剤0.2mg',spec:'0.2mg',vendor:'未設定'},
+'05414736062099':{name:'アポキル・チュアブル16',spec:'16mg 100錠',vendor:'未設定'} };
+let master=Object.assign({},seed,JSON.parse(localStorage.getItem('orderMaster')||'{}'));let orders=JSON.parse(localStorage.getItem('todayOrders')||'[]');
+const $=id=>document.getElementById(id); function save(){localStorage.setItem('orderMaster',JSON.stringify(master));localStorage.setItem('todayOrders',JSON.stringify(orders));render()}
+function openEdit(code){$('edit').classList.remove('hidden');let m=master[code]||{};$('name').value=m.name||'';$('spec').value=m.spec||'';$('vendor').value=m.vendor||'未設定';$('qty').value=1;$('note').value='';$('edit').dataset.code=code}
+$('lookup').onclick=()=>{let c=$('code').value.trim();if(!c)return alert('コードを入力してください');openEdit(c)};
+
+let scanner=null, scanning=false;
+function normalizeCode(raw){
+  let s=String(raw||'').trim().replace(/\s/g,'');
+  // GS1 element string: extract GTIN after (01) or AIM/GS separators.
+  let m=s.match(/\(01\)(\d{14})/); if(m) return m[1];
+  m=s.match(/01(\d{14})/); if(m && (s.includes('(17)')||s.length>16)) return m[1];
+  return s;
+}
+async function stopScanner(){
+  if(scanner && scanning){try{await scanner.stop();}catch(e){} try{await scanner.clear();}catch(e){}}
+  scanning=false; $('reader').classList.add('hidden'); $('scanActions').classList.add('hidden'); $('scanStatus').textContent='';
+}
+async function onScanned(decodedText){
+  const code=normalizeCode(decodedText);
+  if(!code)return;
+  await stopScanner();
+  $('code').value=code;
+  $('scanStatus').textContent='読み取り：'+code;
+  openEdit(code);
+  if(master[code]) $('scanStatus').textContent='登録済み商品を呼び出しました：'+code;
+  else $('scanStatus').textContent='未登録コードです。商品名・規格・発注先を確認して登録してください：'+code;
+}
+$('scan').onclick=async()=>{
+  if(typeof Html5Qrcode==='undefined'){alert('スキャン機能の読み込みに失敗しました。通信環境を確認してください。手入力はそのまま使えます。');return;}
+  if(scanning)return;
+  $('reader').classList.remove('hidden'); $('scanActions').classList.remove('hidden'); $('scanStatus').textContent='カメラを起動しています…';
+  scanner=new Html5Qrcode('reader', {formatsToSupport:[
+    Html5QrcodeSupportedFormats.QR_CODE, Html5QrcodeSupportedFormats.DATA_MATRIX,
+    Html5QrcodeSupportedFormats.EAN_13, Html5QrcodeSupportedFormats.EAN_8,
+    Html5QrcodeSupportedFormats.CODE_128, Html5QrcodeSupportedFormats.UPC_A,
+    Html5QrcodeSupportedFormats.UPC_E
+  ], verbose:false});
+  try{
+    scanning=true;
+    await scanner.start({facingMode:'environment'},{fps:10,qrbox:(w,h)=>({width:Math.min(w*0.85,360),height:Math.min(h*0.55,240)}),aspectRatio:1.333},onScanned,()=>{});
+    $('scanStatus').textContent='コードを枠内に入れてください。';
+  }catch(e){scanning=false;$('reader').classList.add('hidden');$('scanActions').classList.add('hidden');alert('カメラを開始できませんでした。Safariのカメラ許可とHTTPS接続を確認してください。\n'+e);}
+};
+$('stopScan').onclick=stopScanner;
+
+$('add').onclick=()=>{let code=$('edit').dataset.code;let m={name:$('name').value.trim(),spec:$('spec').value.trim(),vendor:$('vendor').value};if(!m.name)return alert('商品名を入れてください');master[code]=m;let existing=orders.find(x=>x.code===code&&x.vendor===m.vendor);let q=Number($('qty').value)||1;if(existing)existing.qty+=q;else orders.push({...m,code,qty:q,note:$('note').value.trim()});$('edit').classList.add('hidden');$('code').value='';save()};
+function render(){ $('count').textContent=orders.length+'品目'; if(!orders.length){$('list').innerHTML="<p class='hint'>まだ登録されていません。</p>";return;} let groups={};orders.forEach(o=>(groups[o.vendor]??=[]).push(o));$('list').innerHTML=Object.entries(groups).map(([v,arr])=>`<h3 style='font-size:16px'>${v}</h3>`+arr.map(o=>`<div class='item'><span class='badge'>${o.code}</span><br><b>${o.name}</b> ${o.spec||''}<span style='float:right' class='qty'>× ${o.qty}</span>${o.note?`<br><small>${o.note}</small>`:''}</div>`).join('')).join('')}
+$('print').onclick=()=>window.print();$('clear').onclick=()=>{if(confirm('本日の発注リストを消しますか？')){orders=[];save()}};render();
+</script></body></html>

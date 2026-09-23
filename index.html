@@ -1,6 +1,27 @@
-<!doctype html><html lang='ja'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'><title>ライト動物病院 発注スキャン 第3版（AI接続対応）</title><script src='https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'></script><style>body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;margin:0;background:#f4f6f8;color:#111}header{background:white;padding:18px 16px;border-bottom:1px solid #ddd;position:sticky;top:0}h1{font-size:20px;margin:0}.wrap{max-width:760px;margin:auto;padding:16px}.card{background:white;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px #0001}button{font-size:18px;border:0;border-radius:12px;padding:15px 18px;background:#1677ff;color:white;width:100%;font-weight:700}.secondary{background:#e9eef5;color:#123}.danger{background:#fff0f0;color:#a00}.row{display:flex;gap:8px}.row>*{flex:1}input,select{box-sizing:border-box;width:100%;font-size:17px;padding:12px;border:1px solid #ccd3db;border-radius:10px;margin:5px 0 12px}label{font-size:13px;color:#555}.hint{font-size:13px;color:#666;line-height:1.5}.item{padding:11px 0;border-bottom:1px solid #eee}.item:last-child{border:0}.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;font-size:12px}.qty{font-weight:700}.hidden{display:none}#reader{width:100%;overflow:hidden;border-radius:12px;margin-top:12px}#scanStatus{font-size:13px;color:#555;margin-top:8px}.scan-actions{display:flex;gap:8px;margin-top:10px}.scan-actions button{font-size:15px;padding:10px}.stop{background:#555}@media print{header,.no-print{display:none}.card{box-shadow:none}.wrap{max-width:none}}
+<!doctype html><html lang='ja'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'><title>ライト動物病院 発注スキャン 第3.1版（AI接続・FAX印刷対応）</title><script src='https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'></script><style>body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;margin:0;background:#f4f6f8;color:#111}header{background:white;padding:18px 16px;border-bottom:1px solid #ddd;position:sticky;top:0}h1{font-size:20px;margin:0}.wrap{max-width:760px;margin:auto;padding:16px}.card{background:white;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px #0001}button{font-size:18px;border:0;border-radius:12px;padding:15px 18px;background:#1677ff;color:white;width:100%;font-weight:700}.secondary{background:#e9eef5;color:#123}.danger{background:#fff0f0;color:#a00}.row{display:flex;gap:8px}.row>*{flex:1}input,select{box-sizing:border-box;width:100%;font-size:17px;padding:12px;border:1px solid #ccd3db;border-radius:10px;margin:5px 0 12px}label{font-size:13px;color:#555}.hint{font-size:13px;color:#666;line-height:1.5}.item{padding:11px 0;border-bottom:1px solid #eee}.item:last-child{border:0}.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;font-size:12px}.qty{font-weight:700}.hidden{display:none}#reader{width:100%;overflow:hidden;border-radius:12px;margin-top:12px}#scanStatus{font-size:13px;color:#555;margin-top:8px}.scan-actions{display:flex;gap:8px;margin-top:10px}.scan-actions button{font-size:15px;padding:10px}.stop{background:#555}@media print{header,.no-print{display:none}.card{box-shadow:none}.wrap{max-width:none}}
 button:disabled{opacity:.5}button,input,select{min-height:44px}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #16846c;outline-offset:3px}h2{font-size:18px}.photo-box{margin:14px 0;padding:16px;background:#f0f7f5;border:1px solid #c7ded6;border-radius:12px}.photo-box img{display:block;width:100%;max-height:320px;object-fit:contain;background:#fff;border-radius:10px;margin:12px 0}.notice{padding:10px;border-radius:8px;background:#fff5dd;color:#644300;font-size:14px;line-height:1.6}.steps{color:#346154;font-size:13px;line-height:1.6}.photo-actions{display:flex;gap:8px;margin-top:8px}.photo-actions button{font-size:14px;padding:12px}.file-input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.status{font-size:14px;line-height:1.6}#saveMaster{margin-top:10px}@media(max-width:420px){.wrap{padding:10px}.card{padding:14px}}@media print{.photo-box{display:none}}
-</style></head><body><header><h1>発注スキャン｜第3版（AI接続対応）</h1></header><div class='wrap'>
+
+#printSheets{display:none}
+@page{size:A4 portrait;margin:10mm}
+@media print{
+ body{background:#fff!important;color:#000!important;margin:0;font-size:10pt}
+ body>header,body>.wrap{display:none!important}
+ #printSheets{display:block!important}
+ .fax-sheet{break-before:page;page-break-before:always;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif}
+ .fax-sheet:first-child{break-before:auto;page-break-before:auto}
+ .fax-title{text-align:center;font-size:18pt;margin:0 0 4mm;font-weight:bold}
+ .fax-meta{display:flex;justify-content:space-between;gap:5mm;line-height:1.6;margin-bottom:4mm;font-size:10pt}
+ .fax-to{font-size:12pt;font-weight:bold}
+ .fax-table{border-collapse:collapse;table-layout:fixed;width:100%;font-size:9pt;line-height:1.25}
+ .fax-table th,.fax-table td{border:1px solid #000;padding:1mm 1.5mm;overflow-wrap:anywhere;vertical-align:middle;box-sizing:border-box}
+ .fax-table th{height:7mm;font-weight:bold;background:#fff}
+ .fax-table td{height:6.5mm}
+ .fax-table thead{display:table-header-group}
+ .fax-table tr{break-inside:avoid;page-break-inside:avoid}
+ .fax-center{text-align:center}
+ .fax-footer{margin-top:3mm;display:flex;justify-content:space-between;font-size:8pt}
+}
+</style></head><body><header><h1>発注スキャン｜第3.1版（AI接続・FAX印刷対応）</h1></header><div class='wrap'>
 <details class="card no-print"><summary>AI読み取りの接続設定</summary>
 <p class="hint">管理者が用意した接続先と院内用パスワードを入力します。OpenAIの秘密APIキーはここに入力しないでください。</p>
 <label for="aiEndpoint">接続先</label><input id="aiEndpoint" type="url" placeholder="https://…workers.dev/recognize" autocomplete="off">
@@ -27,7 +48,7 @@ button:disabled{opacity:.5}button,input,select{min-height:44px}button{cursor:poi
 <div class='card'><div class='row'><h2 style='font-size:18px;margin:0'>本日の発注</h2><span id='count' style='text-align:right'>0品目</span></div><div id='list'><p class='hint'>まだ登録されていません。</p></div></div>
 <div class='card no-print'><button id='print'>発注先ごとに印刷</button><br><br><button class='danger' id='clear'>本日のリストを消去</button></div>
 <div class='card'><h2 style='font-size:18px'>商品マスターについて</h2><p class='hint'>初期の商品例を登録しています。初回登録後はブラウザ内に保存され、同じコードなら次回は商品名・規格・発注先を呼び出します。同じ公開URL・同じブラウザで開くと既存データを引き継ぎます。別の端末やブラウザとは同期しません。</p></div>
-</div><script>
+</div><div id='printSheets' aria-hidden='true'></div><script>
 const seed={
 '4987997010389':{name:'コンセーブ錠25',spec:'25mg 100錠',vendor:'未設定'},
 '4992945114231':{name:'ピモベハート錠2.5',spec:'2.5mg 50錠',vendor:'未設定'},
@@ -188,5 +209,24 @@ $('add').onclick=()=>registerProduct(true);$('saveMaster').onclick=()=>registerP
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 function render(){ $('count').textContent=orders.length+'品目'; if(!orders.length){$('list').innerHTML="<p class='hint'>まだ登録されていません。</p>";return;} let groups=Object.create(null);orders.forEach(o=>(groups[o.vendor]??=[]).push(o));$('list').innerHTML=Object.entries(groups).map(([v,arr])=>`<h3 style='font-size:16px'>${escapeHtml(v)}</h3>`+arr.map(o=>`<div class='item'><span class='badge'>${escapeHtml(o.code)}</span><br><b>${escapeHtml(o.name)}</b> ${escapeHtml(o.spec||'')}<span style='float:right' class='qty'>× ${o.qty}</span>${o.note?`<br><small>${escapeHtml(o.note)}</small>`:''}</div>`).join('')).join('')}
-$('print').onclick=()=>window.print();$('clear').onclick=()=>{if(confirm('本日の発注リストを消しますか？')){orders=[];save()}};render();
+const faxContacts={
+ '富田薬品':{name:'富田薬品（株）A&S福岡営業所',fax:'0120-189-313'},
+ '徳島医療器':{name:'徳島医療器',fax:'092-596-8525'},
+ '富士フィルムVETシステムズ':{name:'富士フイルムVETシステムズ 受注センター',fax:'0570-088606'}
+};
+function buildPrintSheets(){
+  const groups=Object.create(null);orders.forEach(o=>(groups[o.vendor||'未設定']??=[]).push(o));
+  const now=new Date(),date=`${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()}`,shortDate=`${now.getMonth()+1}/${now.getDate()}`;
+  $('printSheets').innerHTML=Object.entries(groups).map(([vendor,items])=>{
+    const total=Math.ceil(items.length/30);const contact=faxContacts[vendor]||{name:vendor,fax:'未設定'};
+    return Array.from({length:total},(_,page)=>{
+      const rows=items.slice(page*30,(page+1)*30);
+      const rowHtml=rows.map(o=>`<tr><td class="fax-center">${shortDate}</td><td>${escapeHtml(o.name)}</td><td>${escapeHtml(o.spec||'')}</td><td class="fax-center">${escapeHtml(o.qty)}</td><td>${escapeHtml(o.note||'')}</td></tr>`).join('');
+      const blanks=Array.from({length:30-rows.length},()=>'<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>').join('');
+      return `<section class="fax-sheet"><h1 class="fax-title">注文書</h1><div class="fax-meta"><div class="fax-to">${escapeHtml(contact.name)} 御中<br>FAX：${escapeHtml(contact.fax)}</div><div>発注日：${date}<br>ライト動物病院<br>TEL：093-581-2277<br>FAX：093-647-2222</div></div><table class="fax-table"><colgroup><col style="width:10%"><col style="width:40%"><col style="width:23%"><col style="width:8%"><col style="width:19%"></colgroup><thead><tr><th>日付</th><th>商品名</th><th>規格</th><th>数量</th><th>備考</th></tr></thead><tbody>${rowHtml}${blanks}</tbody></table><div class="fax-footer"><span>この用紙：${rows.length}品目 ／ 発注先合計：${items.length}品目</span><span>${page+1} / ${total}</span></div></section>`;
+    }).join('');
+  }).join('');
+}
+window.addEventListener('beforeprint',buildPrintSheets);
+$('print').onclick=()=>{if(!orders.length)return alert('発注リストに商品を追加してください');buildPrintSheets();window.print();};$('clear').onclick=()=>{if(confirm('本日の発注リストを消しますか？')){orders=[];save()}};render();
 </script></body></html>

@@ -1,6 +1,12 @@
-<!doctype html><html lang='ja'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'><title>ライト動物病院 発注スキャン 第2版</title><script src='https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'></script><style>body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;margin:0;background:#f4f6f8;color:#111}header{background:white;padding:18px 16px;border-bottom:1px solid #ddd;position:sticky;top:0}h1{font-size:20px;margin:0}.wrap{max-width:760px;margin:auto;padding:16px}.card{background:white;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px #0001}button{font-size:18px;border:0;border-radius:12px;padding:15px 18px;background:#1677ff;color:white;width:100%;font-weight:700}.secondary{background:#e9eef5;color:#123}.danger{background:#fff0f0;color:#a00}.row{display:flex;gap:8px}.row>*{flex:1}input,select{box-sizing:border-box;width:100%;font-size:17px;padding:12px;border:1px solid #ccd3db;border-radius:10px;margin:5px 0 12px}label{font-size:13px;color:#555}.hint{font-size:13px;color:#666;line-height:1.5}.item{padding:11px 0;border-bottom:1px solid #eee}.item:last-child{border:0}.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;font-size:12px}.qty{font-weight:700}.hidden{display:none}#reader{width:100%;overflow:hidden;border-radius:12px;margin-top:12px}#scanStatus{font-size:13px;color:#555;margin-top:8px}.scan-actions{display:flex;gap:8px;margin-top:10px}.scan-actions button{font-size:15px;padding:10px}.stop{background:#555}@media print{header,.no-print{display:none}.card{box-shadow:none}.wrap{max-width:none}}
+<!doctype html><html lang='ja'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'><title>ライト動物病院 発注スキャン 第3版（AI接続対応）</title><script src='https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'></script><style>body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;margin:0;background:#f4f6f8;color:#111}header{background:white;padding:18px 16px;border-bottom:1px solid #ddd;position:sticky;top:0}h1{font-size:20px;margin:0}.wrap{max-width:760px;margin:auto;padding:16px}.card{background:white;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px #0001}button{font-size:18px;border:0;border-radius:12px;padding:15px 18px;background:#1677ff;color:white;width:100%;font-weight:700}.secondary{background:#e9eef5;color:#123}.danger{background:#fff0f0;color:#a00}.row{display:flex;gap:8px}.row>*{flex:1}input,select{box-sizing:border-box;width:100%;font-size:17px;padding:12px;border:1px solid #ccd3db;border-radius:10px;margin:5px 0 12px}label{font-size:13px;color:#555}.hint{font-size:13px;color:#666;line-height:1.5}.item{padding:11px 0;border-bottom:1px solid #eee}.item:last-child{border:0}.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;font-size:12px}.qty{font-weight:700}.hidden{display:none}#reader{width:100%;overflow:hidden;border-radius:12px;margin-top:12px}#scanStatus{font-size:13px;color:#555;margin-top:8px}.scan-actions{display:flex;gap:8px;margin-top:10px}.scan-actions button{font-size:15px;padding:10px}.stop{background:#555}@media print{header,.no-print{display:none}.card{box-shadow:none}.wrap{max-width:none}}
 button:disabled{opacity:.5}button,input,select{min-height:44px}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #16846c;outline-offset:3px}h2{font-size:18px}.photo-box{margin:14px 0;padding:16px;background:#f0f7f5;border:1px solid #c7ded6;border-radius:12px}.photo-box img{display:block;width:100%;max-height:320px;object-fit:contain;background:#fff;border-radius:10px;margin:12px 0}.notice{padding:10px;border-radius:8px;background:#fff5dd;color:#644300;font-size:14px;line-height:1.6}.steps{color:#346154;font-size:13px;line-height:1.6}.photo-actions{display:flex;gap:8px;margin-top:8px}.photo-actions button{font-size:14px;padding:12px}.file-input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.status{font-size:14px;line-height:1.6}#saveMaster{margin-top:10px}@media(max-width:420px){.wrap{padding:10px}.card{padding:14px}}@media print{.photo-box{display:none}}
-</style></head><body><header><h1>発注スキャン｜第2版</h1></header><div class='wrap'>
+</style></head><body><header><h1>発注スキャン｜第3版（AI接続対応）</h1></header><div class='wrap'>
+<details class="card no-print"><summary>AI読み取りの接続設定</summary>
+<p class="hint">管理者が用意した接続先と院内用パスワードを入力します。OpenAIの秘密APIキーはここに入力しないでください。</p>
+<label for="aiEndpoint">接続先</label><input id="aiEndpoint" type="url" placeholder="https://…workers.dev/recognize" autocomplete="off">
+<label for="aiPassword">院内用パスワード</label><input id="aiPassword" type="password" autocomplete="off">
+<button id="saveAiSettings" class="secondary">この画面で接続設定を使う</button><p id="settingsStatus" role="status"></p>
+<p class="hint">接続先だけをこのブラウザに保存します。パスワードは再読み込みすると消えます。</p></details>
 <div class='card no-print'><button id='scan'>📷 カメラでコードをスキャン</button><div id='reader' class='hidden'></div><div id='scanStatus'></div><div id='scanActions' class='scan-actions hidden'><button class='stop' id='stopScan'>スキャンを終了</button></div><p class='hint'>JAN/EAN、QR、GS1 DataMatrixなどを読み取ります。複数のコードがある場合は、商品識別に使えるコードを優先して登録します。初回のみカメラ使用の許可が必要です。</p><label for='code'>コード（GTIN/JANなど）</label><input id='code' inputmode='numeric' placeholder='例：4992945114217'><button class='secondary' id='lookup'>コードを登録／呼び出す</button></div>
 <div id='edit' class='card hidden no-print'><h2 style='font-size:18px;margin-top:0'>商品確認</h2><p id="productStatus" class="status" role="status"></p>
 <section id="photoFlow" class="photo-box hidden" aria-label="箱の写真から商品を登録">
@@ -13,9 +19,9 @@ button:disabled{opacity:.5}button,input,select{min-height:44px}button{cursor:poi
 <div class="photo-actions"><button id="choosePhoto" class="secondary" type="button">保存済みの写真を選ぶ</button><button id="removePhoto" class="secondary hidden" type="button">写真を取り除く</button></div>
 <img id="photoPreview" class="hidden" alt="撮影した商品の箱">
 <p id="photoStatus" class="status" role="status" aria-live="polite"></p>
-<p id="aiStatus" class="notice" role="status">AI自動認識は未接続です。現在は写真を見ながら、下の商品名・規格を入力してください。</p>
-<button id="recognizePhoto" class="secondary" type="button" disabled>AIで商品名・規格を読み取る（未接続）</button>
-<p class="hint">写真は外部へ送信せず、この画面だけで表示します。登録・キャンセル・再読み込みで破棄されます。</p>
+<p id="aiStatus" class="notice" role="status">AI接続が未設定です。接続設定後、写真をAIへ送って商品名・規格を読み取れます。手入力も使えます。</p>
+<button id="recognizePhoto" class="secondary" type="button" disabled>写真をAIで読み取る</button>
+<p class="hint">「写真をAIで読み取る」を押すと、写真を読み取りサーバー経由でOpenAIへ送信します。撮影だけでは送信しません。このアプリは写真を商品マスターに保存しません。</p>
 </section>
 <label for="name">商品名（必須）</label><input id='name'><div class='row'><div><label for='spec'>規格</label><input id='spec' placeholder='例 5mg 500錠'></div><div><label for='qty'>数量</label><input id='qty' type='number' min='1' step='1' value='1'></div></div><label for='vendor'>発注先</label><select id='vendor'><option>富田薬品</option><option>徳島医療器</option><option>富士フィルムVETシステムズ</option><option>未設定</option></select><label for='note'>備考</label><input id='note'><button id='add'>登録して発注リストへ追加</button><button id='saveMaster' class='secondary'>商品マスターだけに登録</button><button id='cancelEdit' class='secondary' style='margin-top:10px'>キャンセル</button></div>
 <div class='card'><div class='row'><h2 style='font-size:18px;margin:0'>本日の発注</h2><span id='count' style='text-align:right'>0品目</span></div><div id='list'><p class='hint'>まだ登録されていません。</p></div></div>
@@ -30,9 +36,12 @@ const seed={
 '05414736062099':{name:'アポキル・チュアブル16',spec:'16mg 100錠',vendor:'未設定'} };
 let master=Object.assign({},seed,JSON.parse(localStorage.getItem('orderMaster')||'{}'));let orders=JSON.parse(localStorage.getItem('todayOrders')||'[]');
 const $=id=>document.getElementById(id); function save(){localStorage.setItem('orderMaster',JSON.stringify(master));localStorage.setItem('todayOrders',JSON.stringify(orders));render()}
-let photoUrl=null, photoVersion=0;
+let photoUrl=null, photoVersion=0, photoReady=false, aiBusy=false, aiController=null;
+let aiEndpoint='https://hidden-term-142e.kouji-sakai1973.workers.dev/recognize', aiPassword='';
+try{aiEndpoint=localStorage.getItem('orderAiEndpoint')||aiEndpoint;}catch{}
+$('aiEndpoint').value=aiEndpoint;
 function clearPhoto(){
-  photoVersion++;
+  photoVersion++;photoReady=false;if(aiController)aiController.abort();aiBusy=false;updateAiState();
   $('photoPreview').removeAttribute('src');
   if(photoUrl) URL.revokeObjectURL(photoUrl);
   photoUrl=null;
@@ -62,7 +71,7 @@ async function showPhoto(event){
   img.onload=()=>{if(version!==photoVersion)return;
     $('photoPreview').src=url;$('photoPreview').classList.remove('hidden');$('removePhoto').classList.remove('hidden');
     $('takePhoto').textContent='📷 箱を撮り直す';
-    $('photoStatus').textContent='写真を確認しました。AI自動認識は未接続のため、商品名・規格を入力してください。';
+    photoReady=true;updateAiState();$('photoStatus').textContent='写真を確認しました。読み取りボタンを押すとAIへ送信します。';
   };
   img.onerror=()=>{if(version!==photoVersion)return;clearPhoto();$('photoStatus').textContent='この写真を表示できませんでした。撮り直すか、JPEG・PNGの画像を選んでください。';};
   img.src=url;
@@ -70,11 +79,55 @@ async function showPhoto(event){
 $('cameraPhoto').onchange=showPhoto;$('libraryPhoto').onchange=showPhoto;
 function closeEdit(){clearPhoto();$('edit').classList.add('hidden');$('code').value='';}
 $('cancelEdit').onclick=closeEdit;
-// Future integration boundary: implement this function with a same-origin, authenticated
-// backend. Keep provider credentials on the server, never in this HTML. Return only
-// {name: string, spec: string}; show suggestions for human review, never set vendor or
-// register automatically. No image is sent and no recognition is simulated in this version.
-async function recognizePackagePhoto(file){return {status:'not_connected',name:null,spec:null};}
+function updateAiState(){
+  $('recognizePhoto').disabled=!photoReady||!aiEndpoint||!aiPassword||aiBusy;
+  $('recognizePhoto').textContent=aiBusy?'読み取り中…':'写真をAIで読み取る';
+  $('aiStatus').textContent=aiBusy?'写真から商品名・規格を読み取っています。':
+    (!aiEndpoint||!aiPassword?'AI接続が未設定です。上の「AI読み取りの接続設定」を開いて設定してください。手入力も使えます。':'接続先が設定されています。読み取り結果は箱と照合してから登録してください。');
+}
+$('saveAiSettings').onclick=()=>{
+  const address=$('aiEndpoint').value.trim(),password=$('aiPassword').value.trim();
+  try{const u=new URL(address);if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||u.pathname!=='/recognize')throw Error();}catch{return alert('管理者から案内されたHTTPSの接続先を入力してください。');}
+  if(password.startsWith('sk-'))return alert('OpenAIのAPIキーは入力しないでください。院内用パスワードを使います。');
+  if(password.length<24)return alert('管理者から案内された院内用パスワードを入力してください。');
+  if(aiController)aiController.abort();photoVersion++;aiBusy=false;
+  aiEndpoint=address;aiPassword=password;
+  try{localStorage.setItem('orderAiEndpoint',address);}catch{}
+  $('aiPassword').value='';$('settingsStatus').textContent='設定を読み込みました。写真の読み取りで接続を確認できます。';updateAiState();
+};
+async function photoForAI(){
+  const img=$('photoPreview');if(!img.naturalWidth)throw Error('写真を読み込んでから再試行してください。');
+  const scale=Math.min(1,2048/Math.max(img.naturalWidth,img.naturalHeight));
+  const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
+  const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+  const image=canvas.toDataURL('image/jpeg',0.9);if(image.length>5*1024*1024)throw Error('写真が大きすぎます。箱に近づいて撮り直してください。');return image;
+}
+async function recognizePackagePhoto(image,signal){
+  const response=await fetch(aiEndpoint,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+aiPassword},body:JSON.stringify({image}),signal,credentials:'omit',referrerPolicy:'no-referrer'});
+  let result;try{result=await response.json();}catch{throw Error('接続先の応答を読めませんでした。管理者に確認してください。');}
+  if(!response.ok)throw Error(result.error||'AIの読み取りに失敗しました。');
+  if(!['name','spec'].every(k=>result[k]===null||(typeof result[k]==='string'&&result[k].length<=300)))throw Error('読み取り結果の形式が違います。');
+  return result;
+}
+$('recognizePhoto').onclick=async()=>{
+  if(aiBusy||!photoReady||!aiEndpoint||!aiPassword)return;
+  const version=photoVersion,code=$('edit').dataset.code,originalName=$('name').value,originalSpec=$('spec').value;
+  aiBusy=true;const controller=new AbortController();aiController=controller;updateAiState();
+  const timer=setTimeout(()=>controller.abort(),55000);
+  try{
+    const image=await photoForAI();if(version!==photoVersion)return;
+    const result=await recognizePackagePhoto(image,controller.signal);
+    if(version!==photoVersion||code!==$('edit').dataset.code)return;
+    const unchanged=$('name').value===originalName&&$('spec').value===originalSpec;
+    if(!unchanged){$('photoStatus').textContent='読み取り中に入力が変更されたため、自動入力しませんでした。必要ならもう一度読み取ってください。';return;}
+    if(!result.name&&!result.spec){$('photoStatus').textContent='商品名・規格を読み取れませんでした。文字が鮮明に写るよう撮り直すか、手入力してください。';return;}
+    if((originalName||originalSpec)&&!confirm('入力済みの商品名・規格をAIが読み取れた項目で置き換えますか？'))return;
+    if(result.name)$('name').value=result.name;if(result.spec)$('spec').value=result.spec;
+    $('photoStatus').textContent='AIの読み取り結果を入力しました。商品名・規格（数字や単位）を箱と照合し、発注先を選んで登録してください。'+(!result.name||!result.spec?' 読み取れなかった項目は手入力してください。':'');
+  }catch(e){if(version===photoVersion)$('photoStatus').textContent=e.name==='AbortError'?'読み取りが時間内に完了しませんでした。再試行できます。':(e instanceof TypeError?'AIに接続できませんでした。通信と接続設定を確認してください。':e.message);}
+  finally{clearTimeout(timer);if(version===photoVersion){aiBusy=false;aiController=null;updateAiState();}}
+};
+updateAiState();
 
 let scanner=null, scanning=false;
 function normalizeCode(raw){

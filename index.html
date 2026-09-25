@@ -399,9 +399,10 @@ async function sendPending(){
  if(pendingOperation.endpoint!==sharedEndpoint()){setCloudStatus('未確認の操作があるため、元の接続先へ戻して再送してください。');return false;}
  sharedBusy=true;updateCloudControls();setCloudStatus('クラウドに保存しています…');
  try{
+ const returnToCamera=pendingOperation.body.action==='register'&&pendingOperation.body.addOrder;
  await cloudRequest(pendingOperation.body);
  localStorage.removeItem('hospitalPendingOperation');pendingOperation=null;
- closeEdit();await refreshShared();return true;
+ closeEdit();await refreshShared();if(returnToCamera&&!isHistoryView()){$('startPhotoOrder').style.scrollMarginTop='160px';$('startPhotoOrder').scrollIntoView({behavior:'smooth',block:'start'});}return true;
  }catch(e){
  // A lost response may follow a successful commit. Keep the original operation ID for all uncertain failures.
  if(e.status>=400&&e.status<500){localStorage.removeItem('hospitalPendingOperation');pendingOperation=null;await refreshShared();}

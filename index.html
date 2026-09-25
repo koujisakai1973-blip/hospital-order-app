@@ -198,6 +198,7 @@ $('recognizePhoto').onclick=async()=>{
     if((originalName||originalSpec)&&!confirm('入力済みの商品名・規格をAIが読み取れた項目で置き換えますか？'))return;
     if(result.name)$('name').value=result.name;if(result.spec)$('spec').value=result.spec;
     matchPhotoProduct();
+    $('name').style.scrollMarginTop='160px';$('name').scrollIntoView({behavior:'smooth',block:'start'});
     $('photoStatus').textContent='AIの読み取り結果を入力しました。商品名・規格（数字や単位）を箱と照合し、発注先を選んで登録してください。'+(!result.name||!result.spec?' 読み取れなかった項目は手入力してください。':'');
   }catch(e){if(version===photoVersion)$('photoStatus').textContent=e.name==='AbortError'?'読み取りが時間内に完了しませんでした。再試行できます。':(e instanceof TypeError?'AIに接続できませんでした。通信と接続設定を確認してください。':e.message);}
   finally{clearTimeout(timer);if(version===photoVersion){aiBusy=false;aiController=null;updateAiState();}}
